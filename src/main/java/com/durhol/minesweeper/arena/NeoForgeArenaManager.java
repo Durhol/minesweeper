@@ -222,6 +222,8 @@ public class NeoForgeArenaManager {
         if (!game.isInBounds(gridX, gridZ)) return;
 
         List<Cell> changed = game.dig(gridX, gridZ);
+        MinesweeperMod.LOGGER.info("Player {} dug at ({}, {}), changed cells count: {}",
+                player.getName().getString(), gridX, gridZ, changed.size());
         if (changed.isEmpty()) return;
 
         ServerLevel level = (ServerLevel) player.level();
@@ -232,15 +234,19 @@ public class NeoForgeArenaManager {
         // Update blocks in world to reflect revealed state with retro textures
         for (Cell c : changed) {
             BlockPos tilePos = new BlockPos(origin.getX() + c.getX(), ARENA_Y + 1, origin.getZ() + c.getZ());
+            BlockState newState;
             if (c.isMine()) {
                 if (c.getX() == gridX && c.getZ() == gridZ) {
-                    level.setBlockAndUpdate(tilePos, MinesweeperMod.TILE_MINE_EXPLODED.get().defaultBlockState());
+                    newState = MinesweeperMod.TILE_MINE_EXPLODED.get().defaultBlockState();
                 } else {
-                    level.setBlockAndUpdate(tilePos, MinesweeperMod.TILE_MINE.get().defaultBlockState());
+                    newState = MinesweeperMod.TILE_MINE.get().defaultBlockState();
                 }
             } else {
-                level.setBlockAndUpdate(tilePos, getBlockForNumber(c.getAdjacentMines()));
+                newState = getBlockForNumber(c.getAdjacentMines());
             }
+
+            level.setBlock(tilePos, newState, net.minecraft.world.level.block.Block.UPDATE_ALL | net.minecraft.world.level.block.Block.UPDATE_IMMEDIATE);
+            player.connection.send(new net.minecraft.network.protocol.game.ClientboundBlockUpdatePacket(tilePos, newState));
         }
 
         // Display mine counter in action bar
@@ -286,13 +292,16 @@ public class NeoForgeArenaManager {
             BlockPos tilePos = new BlockPos(origin.getX() + gridX, ARENA_Y + 1, origin.getZ() + gridZ);
             ServerLevel level = (ServerLevel) player.level();
 
+            BlockState newState;
             if (c.isFlagged()) {
-                level.setBlockAndUpdate(tilePos, MinesweeperMod.TILE_FLAG.get().defaultBlockState());
+                newState = MinesweeperMod.TILE_FLAG.get().defaultBlockState();
                 level.playSound(null, tilePos, com.durhol.minesweeper.sound.ModSounds.FLAG.get(), SoundSource.BLOCKS, 1.0f, 1.0f);
             } else {
-                level.setBlockAndUpdate(tilePos, MinesweeperMod.TILE_CLOSED.get().defaultBlockState());
+                newState = MinesweeperMod.TILE_CLOSED.get().defaultBlockState();
                 level.playSound(null, tilePos, com.durhol.minesweeper.sound.ModSounds.FLAG.get(), SoundSource.BLOCKS, 1.0f, 0.8f);
             }
+            level.setBlock(tilePos, newState, net.minecraft.world.level.block.Block.UPDATE_ALL | net.minecraft.world.level.block.Block.UPDATE_IMMEDIATE);
+            player.connection.send(new net.minecraft.network.protocol.game.ClientboundBlockUpdatePacket(tilePos, newState));
 
             player.displayClientMessage(Component.literal(
                     "§7Mines: §c" + game.getRemainingMineDisplayCount() +
