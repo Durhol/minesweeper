@@ -4,7 +4,7 @@
 [![Loader NeoForge](https://img.shields.io/badge/Loader-NeoForge-orange.svg)](https://neoforged.net/)
 [![Environment Both](https://img.shields.io/badge/Environment-Client%20%26%20Server-blue.svg)](https://neoforged.net/)
 [![License MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![GitHub Releases](https://img.shields.io/badge/Release-v1.0.0-informational.svg)](https://github.com/Durhol/minesweeper/releases)
+[![GitHub Releases](https://img.shields.io/badge/Release-v1.0.2-informational.svg)](https://github.com/Durhol/minesweeper/releases)
 
 ![Minesweeper Icon](icon.png)
 
