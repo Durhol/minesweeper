@@ -8,41 +8,31 @@
 
 ![Minesweeper Icon](icon.png)
 
-> **Author:** Durhol  
-> **Platform:** Minecraft 1.21.1 (NeoForge 21.1.259+)  
-> **License:** MIT  
-> **Repository:** https://github.com/Durhol/minesweeper  
+**Retro Minesweeper** brings the legendary classic Windows Minesweeper experience (Windows 95 / XP style) directly into Minecraft inside a dedicated pocket dimension (`minesweeper:game_world`). Craft a handheld device, right-click to enter, and test your logic on a floating void grid with authentic retro textures, custom sounds, and valuable rewards!
 
 ---
 
-## 🕹️ About the Mod
-
-**Retro Minesweeper** brings the legendary classic Windows Minesweeper experience (Windows 95 / XP style) directly into Minecraft inside a dedicated pocket dimension (`minesweeper:game_world`).
-
-Craft a portable Minesweeper Device, right-click to enter, and test your wits on an isolated floating void arena. Your personal inventory is safely stashed away during the match, and you are equipped with authentic temporary tools: the Trowel, the Flag, and the Forfeit/Exit tool!
-
----
-
-## ✨ Key Features
+## 📸 Features
 
 - 🎮 **3 Difficulty Tiers:**
   - **Tier 1 (Beginner):** $9 \times 9$ grid, 10 mines. Victory Reward: **1x Diamond** 💎.
   - **Tier 2 (Intermediate):** $16 \times 16$ grid, 40 mines. Victory Reward: **5x Diamonds** 💎💎💎💎💎.
   - **Tier 3 (Expert):** $30 \times 16$ grid, 99 mines. Victory Reward: **2x Netherite Ingots** 🪙🪙.
-- 🛡️ **Guaranteed Safe First Click:**
-  - Mine distribution is generated strictly *after* your first click — the initial clicked tile and all 8 surrounding neighbors are 100% mine-free!
-- 🌊 **Recursive Flood Fill:**
-  - Digging a zero-adjacent cell automatically reveals adjacent clear regions recursively.
-- 🚩 **Strict Flag Cap:**
-  - Flag count cannot exceed total mine count — your mine counter never drops into negative numbers. Flagged tiles are protected from accidental clicks.
-- 🎨 **Authentic Windows 95/XP Visuals:**
-  - 3D beveled unpressed buttons, classic colored digits 1–8, spiked retro mines, and exploded mine red highlight.
-- 🎵 **Custom Sound Design:**
-  - Unique sound effects for game start, cell digging/clicking, flag placement, victory fanfare, and defeat explosion!
-- 💥 **Explosion Animation & Post-Game Field Inspection:**
-  - Triggering a mine produces explosion particles and smoke over all hidden mines without instantly ejecting you. You can walk around, analyze the revealed board, and leave whenever ready via the *Forfeit & Exit* tool.
-- 🔒 **Arena & Inventory Protection:**
-  - Arena tiles have bedrock-tier blast resistance, tool dropping is prohibited, and your original inventory is automatically restored upon return.
+- 🛡️ **Guaranteed Safe First Click:** Mine distribution is generated strictly *after* your first click — the initial clicked tile and all 8 surrounding neighbors are guaranteed to never contain mines.
+- 🌊 **Recursive Flood Fill:** Digging an empty cell (0 adjacent mines) automatically triggers a recursive cascade that clears surrounding safe areas.
+- 🚩 **Strict Flag Cap:** You cannot place more flags than the total number of mines in the arena. Your mine counter will never drop into negative numbers, and flagged cells are protected from accidental digging.
+- 🎨 **Authentic Windows 95/XP Visuals:** 3D beveled buttons, classic colored digits (1–8), spiked retro mines, and exploded mine red highlight.
+- 🎵 **Custom Sound Design:** Dedicated retro sound effects for game start, cell digging/clicking, flag toggling, victory fanfare, and defeat explosion.
+- 💥 **Explosion Animation & Board Inspection:** Tripping a mine triggers explosion particles and smoke over all hidden mines without immediately kicking you out. You can walk around, inspect the entire revealed minefield, and return home whenever you want via the *Forfeit & Exit* tool.
+- 🔒 **Zero Loss & Dimension Isolation:** Player inventories are safely stashed before entering the pocket dimension and fully restored upon return. Arena blocks are indestructible (bedrock-tier), and game tools cannot be dropped or lost.
+
+---
+
+## 🛠️ Installation & Requirements
+
+- **Minecraft:** `1.21.1`
+- **Mod Loader:** `NeoForge >= 21.1.259`
+- Place the downloaded `minesweeper-1.0.0.jar` into your Minecraft profile's `mods` folder.
 
 ---
 
@@ -57,9 +47,25 @@ Craft a portable Minesweeper Device, right-click to enter, and test your wits on
 
 ---
 
-## 🚀 Installation
+## 🔨 Building from Source
 
-1. Install [Minecraft 1.21.1](https://www.minecraft.net/) and [NeoForge](https://neoforged.net/) `21.1.259+`.
-2. Download `minesweeper-1.0.0.jar` from the [Releases](https://github.com/Durhol/minesweeper/releases) page or [Modrinth](https://modrinth.com/).
-3. Place the `.jar` into your `.minecraft/mods/` directory.
-4. Launch Minecraft and enjoy!
+```bash
+git clone https://github.com/Durhol/minesweeper.git
+cd minesweeper
+./gradlew build # or gradlew.bat build on Windows
+```
+
+The compiled mod JAR will be located at `build/libs/minesweeper-1.0.0.jar`.
+
+---
+
+## 👤 Author & Contacts
+
+- **Author:** Durhol
+- **Telegram:** [@tyxap](https://t.me/tyxap) or [@Durhol](https://t.me/Durhol)
+
+---
+
+## 📄 License
+
+This project is licensed under the [MIT License](https://github.com/Durhol/minesweeper/blob/main/LICENSE).
