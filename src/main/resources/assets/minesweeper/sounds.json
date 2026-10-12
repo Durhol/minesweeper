@@ -1,0 +1,32 @@
+{
+  "click": {
+    "subtitle": "subtitles.minesweeper.click",
+    "sounds": [
+      "minesweeper:click"
+    ]
+  },
+  "flag": {
+    "subtitle": "subtitles.minesweeper.flag",
+    "sounds": [
+      "minesweeper:flag"
+    ]
+  },
+  "start": {
+    "subtitle": "subtitles.minesweeper.start",
+    "sounds": [
+      "minesweeper:start"
+    ]
+  },
+  "win": {
+    "subtitle": "subtitles.minesweeper.win",
+    "sounds": [
+      "minesweeper:win"
+    ]
+  },
+  "lose": {
+    "subtitle": "subtitles.minesweeper.lose",
+    "sounds": [
+      "minesweeper:lose"
+    ]
+  }
+}

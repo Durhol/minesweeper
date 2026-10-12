@@ -1,0 +1,17 @@
+{
+  "item.minesweeper.tier_1_device": "Minesweeper Device (Tier 1)",
+  "item.minesweeper.tier_2_device": "Minesweeper Device (Tier 2)",
+  "item.minesweeper.tier_3_device": "Minesweeper Device (Tier 3)",
+  "item.minesweeper.minesweeper_shovel": "Minesweeper Trowel / Digger",
+  "item.minesweeper.minesweeper_flag": "Minesweeper Flag",
+  "item.minesweeper.minesweeper_exit": "Forfeit & Exit",
+  "itemGroup.minesweeper": "Retro Minesweeper",
+  "message.minesweeper.victory": "§aCongratulations! You cleared the minefield!",
+  "message.minesweeper.defeat": "§cBOOM! You tripped a mine!",
+  "message.minesweeper.forfeit": "§eGame forfeited. Returning to home coordinates.",
+  "subtitles.minesweeper.click": "Tile Clicked",
+  "subtitles.minesweeper.flag": "Flag Toggled",
+  "subtitles.minesweeper.start": "Game Started",
+  "subtitles.minesweeper.win": "Victory!",
+  "subtitles.minesweeper.lose": "Game Over!"
+}

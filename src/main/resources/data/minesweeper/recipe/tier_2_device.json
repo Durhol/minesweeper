@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "EDE",
+    "G1G",
+    "ETE"
+  ],
+  "key": {
+    "1": {
+      "item": "minesweeper:tier_1_device"
+    },
+    "E": {
+      "item": "minecraft:emerald"
+    },
+    "G": {
+      "item": "minecraft:gold_block"
+    },
+    "D": {
+      "item": "minecraft:diamond_block"
+    },
+    "T": {
+      "item": "minecraft:tnt"
+    }
+  },
+  "result": {
+    "id": "minesweeper:tier_2_device",
+    "count": 1
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "NDN",
+    "O2O",
+    "NTN"
+  ],
+  "key": {
+    "2": {
+      "item": "minesweeper:tier_2_device"
+    },
+    "N": {
+      "item": "minecraft:netherite_ingot"
+    },
+    "O": {
+      "item": "minecraft:crying_obsidian"
+    },
+    "D": {
+      "item": "minecraft:nether_star"
+    },
+    "T": {
+      "item": "minecraft:tnt"
+    }
+  },
+  "result": {
+    "id": "minesweeper:tier_3_device",
+    "count": 1
+  }
+}

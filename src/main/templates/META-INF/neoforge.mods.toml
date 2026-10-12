@@ -1,0 +1,32 @@
+modLoader="javafml"
+loaderVersion="${loader_version_range}"
+license="${mod_license}"
+
+[[mods]]
+modId="${mod_id}"
+version="${mod_version}"
+displayName="${mod_name}"
+logoFile="icon.png"
+authors="Durhol"
+description='''
+Classic Windows Minesweeper brought into a dedicated Minecraft pocket dimension!
+- 3 difficulty tiers (Beginner 9x9, Intermediate 16x16, Expert 30x16)
+- Retro Windows 95/XP authentic tile visuals & custom sound effects
+- Guaranteed safe first click & recursive flood fill
+- Secure inventory stashing and reward payout upon victory
+Created by Durhol.
+'''
+
+[[dependencies.${mod_id}]]
+    modId="neoforge"
+    type="required"
+    versionRange="[${neo_version},)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="minecraft"
+    type="required"
+    versionRange="${minecraft_version_range}"
+    ordering="NONE"
+    side="BOTH"
