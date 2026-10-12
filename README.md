@@ -1,10 +1,17 @@
-# 💣 Retro Minesweeper (Minecraft NeoForge 1.21.1)
+# 💣 Retro Minesweeper
+
+[![Minecraft 1.21.1](https://img.shields.io/badge/Minecraft-1.21.1-brightgreen.svg)](https://www.minecraft.net/)
+[![Loader NeoForge](https://img.shields.io/badge/Loader-NeoForge-orange.svg)](https://neoforged.net/)
+[![Environment Both](https://img.shields.io/badge/Environment-Client%20%26%20Server-blue.svg)](https://neoforged.net/)
+[![License MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![GitHub Releases](https://img.shields.io/badge/Release-v1.0.0-informational.svg)](https://github.com/Durhol/minesweeper/releases)
 
 ![Minesweeper Icon](icon.png)
 
 > **Author:** Durhol  
 > **Platform:** Minecraft 1.21.1 (NeoForge 21.1.259+)  
 > **License:** MIT  
+> **Repository:** https://github.com/Durhol/minesweeper  
 
 ---
 
