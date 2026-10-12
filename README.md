@@ -32,7 +32,7 @@
 
 - **Minecraft:** `1.21.1`
 - **Mod Loader:** `NeoForge >= 21.1.259`
-- Place the downloaded `minesweeper-1.0.0.jar` into your Minecraft profile's `mods` folder.
+- Place the downloaded `minesweeper.jar` into your Minecraft profile's `mods` folder.
 
 ---
 
