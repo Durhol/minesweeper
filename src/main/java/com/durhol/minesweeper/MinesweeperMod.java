@@ -62,15 +62,15 @@ public class MinesweeperMod {
     public static final DeferredBlock<Block> TILE_7 = BLOCKS.register("tile_7", () -> new Block(tileProps()));
     public static final DeferredBlock<Block> TILE_8 = BLOCKS.register("tile_8", () -> new Block(tileProps()));
 
-    // ── Tier Device Items ─────────────────────────────────────────
+    // ── Tier Device Items (10 Durability) ────────────────────────
     public static final DeferredItem<Item> TIER_1_DEVICE = ITEMS.register(ModItemNames.TIER_1_DEVICE,
-            () -> new DeviceItem(GameTier.TIER_1, new Item.Properties().stacksTo(1)));
+            () -> new DeviceItem(GameTier.TIER_1, new Item.Properties().durability(10)));
 
     public static final DeferredItem<Item> TIER_2_DEVICE = ITEMS.register(ModItemNames.TIER_2_DEVICE,
-            () -> new DeviceItem(GameTier.TIER_2, new Item.Properties().stacksTo(1)));
+            () -> new DeviceItem(GameTier.TIER_2, new Item.Properties().durability(10)));
 
     public static final DeferredItem<Item> TIER_3_DEVICE = ITEMS.register(ModItemNames.TIER_3_DEVICE,
-            () -> new DeviceItem(GameTier.TIER_3, new Item.Properties().stacksTo(1)));
+            () -> new DeviceItem(GameTier.TIER_3, new Item.Properties().durability(10)));
 
     // ── Temporary Game Tools ──────────────────────────────────────
     public static final DeferredItem<Item> MINESWEEPER_SHOVEL = ITEMS.register(ModItemNames.SHOVEL,
@@ -120,9 +120,11 @@ public class MinesweeperMod {
         public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
             ItemStack stack = player.getItemInHand(hand);
             if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
+                ItemStack usedDevice = stack.copy();
+                usedDevice.setCount(1);
                 stack.shrink(1);
                 player.setItemInHand(hand, stack);
-                NeoForgeArenaManager.enterGame(serverPlayer, tier);
+                NeoForgeArenaManager.enterGame(serverPlayer, tier, usedDevice);
                 return InteractionResultHolder.consume(stack);
             }
             return InteractionResultHolder.sidedSuccess(stack, level.isClientSide());

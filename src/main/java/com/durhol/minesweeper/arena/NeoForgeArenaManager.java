@@ -53,14 +53,20 @@ public class NeoForgeArenaManager {
     /** Saved original gamemode per player UUID */
     private static final Map<UUID, GameType> savedGameModes = new ConcurrentHashMap<>();
 
+    /** Saved used device item per player UUID */
+    private static final Map<UUID, ItemStack> activeDevices = new ConcurrentHashMap<>();
+
     // ─── ENTER GAME ───────────────────────────────────────────────
 
     /**
      * Called when a player right-clicks a Minesweeper Device.
      * The item is already consumed from the player's active hand.
      */
-    public static void enterGame(ServerPlayer player, GameTier tier) {
+    public static void enterGame(ServerPlayer player, GameTier tier, ItemStack usedDevice) {
         UUID playerId = player.getUUID();
+        if (usedDevice != null && !usedDevice.isEmpty()) {
+            activeDevices.put(playerId, usedDevice);
+        }
         MinecraftServer server = player.getServer();
         if (server == null) return;
 
@@ -337,8 +343,25 @@ public class NeoForgeArenaManager {
 
         player.displayClientMessage(Component.literal("§6+ " + reward.getCount() + "x " + reward.getItem().getDescription().getString()), false);
 
+        // Handle used device durability: deduct 1 durability, return if not broken
+        ItemStack device = activeDevices.remove(playerId);
+        ItemStack returnedDevice = null;
+        if (device != null && !device.isEmpty()) {
+            int newDamage = device.getDamageValue() + 1;
+            int maxDamage = device.getMaxDamage();
+            if (newDamage < maxDamage) {
+                device.setDamageValue(newDamage);
+                returnedDevice = device;
+                int remaining = maxDamage - newDamage;
+                player.displayClientMessage(Component.literal("§aDevice saved! §eDurability: §f" + remaining + "/" + maxDamage), false);
+            } else {
+                player.displayClientMessage(Component.literal("§cYour Minesweeper Device has broken from wear!"), false);
+                player.level().playSound(null, player.blockPosition(), SoundEvents.ITEM_BREAK, SoundSource.PLAYERS, 1.0f, 1.0f);
+            }
+        }
+
         // Teleport home with reward and restore inventory post-teleport
-        teleportHome(player, playerId, reward);
+        teleportHome(player, playerId, reward, returnedDevice);
     }
 
     public static void handleDefeat(ServerPlayer player, BlockPos explodedPos) {
@@ -371,7 +394,14 @@ public class NeoForgeArenaManager {
             }
         }
 
-        // 3. Clear shovel and flag, only leave Exit item so player can inspect the field and leave when ready
+        // 3. Device is destroyed upon defeat
+        ItemStack lostDevice = activeDevices.remove(playerId);
+        if (lostDevice != null && !lostDevice.isEmpty()) {
+            player.displayClientMessage(Component.literal("§c💥 Your Minesweeper Device was completely destroyed in the explosion!"), false);
+            level.playSound(null, player.blockPosition(), SoundEvents.ITEM_BREAK, SoundSource.PLAYERS, 1.0f, 0.8f);
+        }
+
+        // 4. Clear shovel and flag, only leave Exit item so player can inspect the field and leave when ready
         Inventory inv = player.getInventory();
         inv.clearContent();
         inv.setItem(8, new ItemStack(MinesweeperMod.MINESWEEPER_EXIT.get()));
@@ -386,12 +416,18 @@ public class NeoForgeArenaManager {
         CommonArenaManager.ArenaSession session = CommonArenaManager.getInstance().removeSession(playerId);
         if (session == null) return;
 
+        ItemStack lostDevice = activeDevices.remove(playerId);
+        if (lostDevice != null && !lostDevice.isEmpty()) {
+            player.displayClientMessage(Component.literal("§cYour Minesweeper Device was destroyed by forfeit!"), false);
+            player.level().playSound(null, player.blockPosition(), SoundEvents.ITEM_BREAK, SoundSource.PLAYERS, 1.0f, 0.8f);
+        }
+
         player.displayClientMessage(Component.translatable("message.minesweeper.forfeit"), false);
 
-        teleportHome(player, playerId, null);
+        teleportHome(player, playerId, null, null);
     }
 
-    private static void teleportHome(ServerPlayer player, UUID playerId, ItemStack victoryReward) {
+    private static void teleportHome(ServerPlayer player, UUID playerId, ItemStack victoryReward, ItemStack returnedDevice) {
         PlayerStash stash = CommonArenaManager.getInstance().retrieveStash(playerId);
         GameType originalGameMode = savedGameModes.remove(playerId);
 
@@ -427,9 +463,13 @@ public class NeoForgeArenaManager {
                 }
                 restoreInventory(sp);
                 if (victoryReward != null && !victoryReward.isEmpty()) {
-                    sp.getInventory().add(victoryReward.copy());
-                    sp.containerMenu.broadcastChanges();
+                    giveOrDrop(sp, victoryReward.copy());
                 }
+                if (returnedDevice != null && !returnedDevice.isEmpty()) {
+                    giveOrDrop(sp, returnedDevice.copy());
+                }
+                sp.containerMenu.broadcastChanges();
+                sp.inventoryMenu.broadcastChanges();
             }
         };
 
@@ -441,6 +481,13 @@ public class NeoForgeArenaManager {
                 targetPitch,
                 DimensionTransition.PLAY_PORTAL_SOUND.then(DimensionTransition.PLACE_PORTAL_TICKET).then(onHome)
         ));
+    }
+
+    private static void giveOrDrop(ServerPlayer player, ItemStack stack) {
+        if (stack == null || stack.isEmpty()) return;
+        if (!player.getInventory().add(stack)) {
+            player.drop(stack, false);
+        }
     }
 
     // ─── RETRO BLOCK MAPPING ──────────────────────────────────────
