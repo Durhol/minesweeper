@@ -55,7 +55,7 @@ cd minesweeper
 ./gradlew build # or gradlew.bat build on Windows
 ```
 
-The compiled mod JAR will be located at `build/libs/minesweeper-1.0.0.jar`.
+The compiled mod JAR will be located at `build/libs/minesweeper.jar`.
 
 ---
 
